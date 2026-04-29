@@ -16,5 +16,5 @@ app.use("/api/v1/users", UserRouter);
 app.use("/api/v1/posts", PostRouter);
 
 
-//example route : httsp://localhost:4000/api/v1/users/register
+//example route : http://localhost:4000/api/v1/users/register
 export default app;
