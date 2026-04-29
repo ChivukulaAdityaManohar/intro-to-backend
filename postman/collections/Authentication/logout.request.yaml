@@ -1,0 +1,14 @@
+$kind: http-request
+name: logout
+url: http://localhost:4000/api/v1/users/logout
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: "{\r
+
+    \    \"email\" : \"aditya.manohar@brigosha.com\"\r
+
+    }"
+order: 4120581801638391

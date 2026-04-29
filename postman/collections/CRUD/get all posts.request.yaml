@@ -1,0 +1,5 @@
+$kind: http-request
+name: get all posts
+url: http://localhost:4000/api/v1/posts/getPosts
+method: GET
+order: 3745258494281926

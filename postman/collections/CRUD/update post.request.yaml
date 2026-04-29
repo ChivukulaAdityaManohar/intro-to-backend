@@ -1,0 +1,18 @@
+$kind: http-request
+name: update post
+url: http://localhost:4000/api/v1/posts/update/69f1db0a973e8460b53dc741
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: "{\r
+
+    \ \"name\" : \"Lilly\",\r
+
+    \ \"description\" : \"A cute Flower\",\r
+
+    \ \"age\" : 2   \r
+
+    }"
+order: 4356707313527845

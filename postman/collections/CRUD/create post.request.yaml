@@ -1,0 +1,18 @@
+$kind: http-request
+name: create post
+url: http://localhost:4000/api/v1/posts/create
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: "{\r
+
+    \    \"name\" : \"lemon\",\r
+
+    \    \"description\" : \"a sour person\",\r
+
+    \    \"age\" : 15\r
+
+    }"
+order: 1777448925760
