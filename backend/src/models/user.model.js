@@ -45,3 +45,13 @@ userSchema.methods.comparePassword = async function(password) {
     return await bcrypt.compare(password, this.password);
 };
 export const User = mongoose.model("User", userSchema);
+
+//In the above line "User" is the name of the model and \
+// "userSchema" is the schema we defined for it.
+
+//The mongoose will create a collection named "users" in 
+// the database (lowercase and pluralized version of the model name) 
+// to store documents that follow the userSchema structure.
+//If the collection is not already present in the database, 
+ //Mongoose will create it automatically when you first save a document 
+ // using the Post model.

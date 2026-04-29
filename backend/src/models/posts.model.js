@@ -23,3 +23,13 @@ const postSchema = new Schema({
 });
 
 export const Post = mongoose.model("Post", postSchema);
+
+//In the above line "Post" is the name of the model and \
+// "postSchema" is the schema we defined for it.
+
+//The mongoose will create a collection named "posts" in 
+// the database (lowercase and pluralized version of the model name) 
+// to store documents that follow the postSchema structure.
+//If the collection is not already present in the database, 
+ //Mongoose will create it automatically when you first save a document 
+ // using the Post model.
