@@ -16,6 +16,11 @@ const postSchema = new Schema({
         required: true,
         min : 0,
         max : 150
+    },
+    createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+     required: true
     }
 },
  {

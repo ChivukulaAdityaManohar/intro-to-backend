@@ -1,2 +1,8 @@
 $kind: collection
 name: Authentication
+auth:
+  - id: dc436bc8-f8d8-4ae8-b73c-423c07287d94
+    type: bearer
+    name: Bearer Token
+    credentials:
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGFhZGEzYzhlY2E1ODllNzU3Y2QxNyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc5MDg1MTQ2LCJleHAiOjE3NzkxNzE1NDZ9.K8FwzhK1Q9mLwcaaud-Z0flQc_lAdcB7nGEtZSYdNcY

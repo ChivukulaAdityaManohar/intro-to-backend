@@ -1,0 +1,16 @@
+$kind: http-request
+name: refresh access token
+url: http://localhost:4000/api/v1/users/refresh-token
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: "{\r
+
+    \    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGFlYTI2Y2Q5MTg2ZDFiOWZhZWJmYSIsImlhdCI6MTc3OTEwMzMwOCwiZXhwIjoxNzc5NzA4MTA4fQ.pRGuZDC87R8OfO4EbvL6JWTjofdhEdnWHyvtlLzuHiU\"\r
+
+    }"
+auth:
+  type: noauth
+order: 4491454364154523

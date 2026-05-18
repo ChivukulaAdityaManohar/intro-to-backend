@@ -8,9 +8,9 @@ body:
   type: json
   content: "{\r
 
-    \    \"username\": \"Ch Aditya Manohar\",\r
+    \    \"username\": \"aditya\",\r
 
-    \    \"email\" : \"aditya.manohar@brigosha.com\",\r
+    \    \"email\" : \"aditya@brigosha.com\",\r
 
     \    \"password\" : \"1234567\"\r
 

@@ -1,0 +1,22 @@
+$kind: http-request
+name: create post with authorization
+url: http://localhost:4000/api/v1/posts/create
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: "{\r
+
+    \    \"name\": \"Test1\",\r
+
+    \    \"description\": \"JWT working 1\",\r
+
+    \    \"age\": 22\r
+
+    }"
+auth:
+  type: bearer
+  credentials:
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGFlYTI2Y2Q5MTg2ZDFiOWZhZWJmYSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc5MTAzODg0LCJleHAiOjE3NzkxMDM5NDR9.3z_f6WYWp6WKKTyF-K5yyd-DLxLQ8Dz2Nn0CGDdWZ20
+order: 4500245804114742

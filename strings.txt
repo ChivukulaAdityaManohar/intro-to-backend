@@ -1,0 +1,134 @@
+Alright — here’s a C++ String Methods Cheat Sheet with examples for quick reference.
+This covers all important std::string functions you’ll use in real projects.
+
+C++ String Methods Cheat Sheet
+1. Creation & Initialization
+Cpp#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string s1 = "Hello";          // Direct initialization
+    string s2("World");           // Constructor style
+    string s3(5, '*');            // ***** (repeats char)
+    string s4 = s1 + " " + s2;    // Concatenation
+
+    cout << s1 << " | " << s2 << " | " << s3 << " | " << s4 << endl;
+}
+
+
+2. Size & Capacity
+Cppstring str = "Hello";
+cout << str.size();      // 5
+cout << str.length();    // 5 (same as size)
+cout << str.capacity();  // Allocated storage (may be >= size)
+cout << str.empty();     // false
+
+
+3. Accessing Characters
+Cppcout << str[0];      // 'H' (no bounds check)
+cout << str.at(1);   // 'e' (with bounds check)
+cout << str.front(); // 'H'
+cout << str.back();  // 'o'
+
+
+4. Modifying Strings
+Cppstring s = "Hello";
+
+// Append
+s.append(" World");   // "Hello World"
+s += "!";             // "Hello World!"
+
+// Insert
+s.insert(5, ",");     // "Hello, World!"
+
+// Replace
+s.replace(0, 5, "Hi"); // "Hi, World!"
+
+// Erase
+s.erase(3, 2);        // Removes 2 chars from index 3
+
+// Clear
+s.clear();            // ""
+
+
+5. Substrings
+Cppstring text = "Programming";
+string sub = text.substr(0, 6); // "Progra"
+
+
+6. Searching
+Cppstring t = "Hello World";
+cout << t.find("World");   // 6
+cout << t.rfind("l");      // 9 (last occurrence)
+cout << t.find_first_of("aeiou"); // 1 (first vowel)
+cout << t.find_last_of("aeiou");  // 7
+
+
+7. Comparison
+Cppstring a = "abc", b = "abd";
+if (a == b) cout << "Equal";
+if (a.compare(b) < 0) cout << "a < b";
+
+
+8. Conversion
+Cppstring numStr = "123";
+int num = stoi(numStr);       // String → int
+double d = stod("3.14");      // String → double
+string s = to_string(42);     // Number → string
+
+
+9. Swapping
+Cppstring x = "One", y = "Two";
+x.swap(y); // x="Two", y="One"
+
+
+10. C-Style String Interop
+Cppstring cppStr = "Hello";
+const char* cStr = cppStr.c_str(); // Get const char*
+
+
+Full Example Program
+Cpp#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string str = "Hello";
+
+    // Append and insert
+    str.append(" World");
+    str.insert(5, ",");
+    cout << "After insert: " << str << endl;
+
+    // Replace and erase
+    str.replace(0, 5, "Hi");
+    str.erase(2, 1);
+    cout << "After modifications: " << str << endl;
+
+    // Substring
+    cout << "Substring: " << str.substr(0, 4) << endl;
+
+    // Find
+    size_t pos = str.find("World");
+    if (pos != string::npos)
+        cout << "'World' found at position: " << pos << endl;
+
+    // Conversion
+    string numStr = "42";
+    int num = stoi(numStr);
+    cout << "Number + 10 = " << num + 10 << endl;
+
+    return 0;
+}
+
+
+✅ Pro Tips:
+
+Use .at() instead of [] for safe access.
+Use .find() and check against string::npos to avoid errors.
+Prefer std::string over C-style strings for safety and flexibility.
+
+
+If you want, I can also prepare a visual mind map of all C++ string functions so you can memorize them faster.
+Do you want me to make that next?

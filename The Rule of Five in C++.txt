@@ -1,0 +1,246 @@
+The Rule of Five in C++ is a modern best practice (introduced with C++11) that extends the Rule of Three to account for move semantics.
+It states:
+
+If your class manages a resource (e.g., dynamic memory, file handles, sockets) and you need to define any one of the following special member functions, you should usually define all five to ensure proper resource management.
+
+
+The Five Special Member Functions
+
+
+Destructor
+Cleans up the resource when the object is destroyed.
+Cpp~MyClass();
+
+
+
+Copy Constructor
+Creates a new object as a copy of another.
+CppMyClass(const MyClass& other);
+
+
+
+Copy Assignment Operator
+Assigns one existing object to another.
+CppMyClass& operator=(const MyClass& other);
+
+
+
+Move Constructor (C++11+)
+Transfers ownership of resources from a temporary object.
+CppMyClass(MyClass&& other) noexcept;
+
+
+
+Move Assignment Operator (C++11+)
+Transfers ownership during assignment.
+CppMyClass& operator=(MyClass&& other) noexcept;
+
+
+
+
+Example Implementation
+Cpp#include <iostream>
+#include <utility> // for std::exchange
+
+class MyClass {
+private:
+    int* data;
+
+public:
+    // Constructor
+    MyClass(int value) : data(new int(value)) {
+        std::cout << "Constructed with value " << *data << "\n";
+    }
+
+    // Destructor
+    ~MyClass() {
+        delete data;
+        std::cout << "Destroyed\n";
+    }
+
+    // Copy Constructor
+    MyClass(const MyClass& other) : data(new int(*other.data)) {
+        std::cout << "Copy constructed\n";
+    }
+
+    // Copy Assignment
+    MyClass& operator=(const MyClass& other) {
+        if (this != &other) {
+            *data = *other.data;
+            std::cout << "Copy assigned\n";
+        }
+        return *this;
+    }
+
+    // Move Constructor
+    MyClass(MyClass&& other) noexcept : data(std::exchange(other.data, nullptr)) {
+        std::cout << "Move constructed\n";
+    }
+
+    // Move Assignment
+    MyClass& operator=(MyClass&& other) noexcept {
+        if (this != &other) {
+            delete data;
+            data = std::exchange(other.data, nullptr);
+            std::cout << "Move assigned\n";
+        }
+        return *this;
+    }
+};
+
+int main() {
+    MyClass a(10);
+    MyClass b = a;           // Copy constructor
+    MyClass c = std::move(a); // Move constructor
+    b = c;                   // Copy assignment
+    c = MyClass(20);         // Move assignment
+}
+
+
+Key Points
+
+Why? If you define one of these functions, it usually means your class manages a resource that needs explicit handling.
+Move semantics improve performance by avoiding deep copies when possible.
+If your class does not manage resources, you can often rely on the compiler-generated defaults (Rule of Zero).
+
+
+If you want, I can also give you a Rule of Five vs Rule of Zero comparison table so you know when to implement them manually and when to let the compiler handle it.
+Do you want me to include that?
+
+
+
+Good observation — this is a subtle but important point in C++ move semantics.
+Let’s break it down step-by-step for your example:
+
+1. The Code in Question
+CppMyData a(1000);
+MyData b = move(a);
+
+
+2. What Happens Here
+
+move(a) casts a to an rvalue reference (MyData&&).
+The syntax MyData b = move(a); is copy-initialization of a new object b from an rvalue.
+Since b is being created, the compiler looks for a constructor, not an assignment operator.
+
+
+3. Constructor Resolution
+The compiler checks in this order:
+
+Move constructor: MyData(MyData&&) — ✅ Found in your code, so it’s called.
+If no move constructor exists, it tries the copy constructor: MyData(const MyData&).
+
+Important:
+The move assignment operator (MyData& operator=(MyData&&)) is only used when the object already exists and you assign to it:
+CppMyData b(500);   // b already exists
+b = move(a);     // calls move assignment operator (if defined)
+
+
+4. Summary Table
+
+
+
+Code Form
+What’s Called?
+
+
+
+
+MyData b = move(a);
+Move constructor
+
+
+b = move(a); (b exists)
+Move assignment operator
+
+
+MyData b = a;
+Copy constructor
+
+
+b = a;
+Copy assignment operator
+
+
+
+
+5. Why Your Example Works Without Move Assignment
+Because b is constructed from move(a), the move constructor is the correct function to call.
+The move assignment operator is irrelevant here.
+
+If you want, I can extend your example to include both move constructor and move assignment operator so you can see exactly which one is called in each case.
+Do you want me to prepare that runnable demo?
+
+
+
+In C++11 and later, an rvalue reference is a type of reference that can bind to temporary objects (rvalues), enabling move semantics and perfect forwarding.
+
+1. Lvalues vs Rvalues
+
+Lvalue: Has a persistent memory address (e.g., variables, objects).Cppint x = 5; // x is an lvalue
+
+
+Rvalue: Temporary value without a persistent address (e.g., literals, expressions).Cppint y = x + 2; // (x + 2) is an rvalue
+
+
+
+
+2. Rvalue Reference Syntax
+
+Declared using && (double ampersand).
+Can bind to rvalues only (unless std::move is used).
+
+Example:
+Cpp#include <iostream>
+using namespace std;
+
+void process(int&& val) { // rvalue reference parameter
+    cout << "Processing rvalue: " << val << endl;
+}
+
+int main() {
+    process(10); // OK: 10 is an rvalue
+    // int a = 5;
+    // process(a); // ❌ Error: a is an lvalue
+    process(5 + 3); // OK: temporary result is an rvalue
+}
+
+
+3. Why Rvalue References Exist
+They enable:
+
+Move Semantics – Transfer resources instead of copying.
+Perfect Forwarding – Forward arguments while preserving value category.
+
+
+4. Move Semantics Example
+Cpp#include <iostream>
+#include <vector>
+using namespace std;
+
+class MyData {
+    vector<int> data;
+public:
+    MyData(size_t n) : data(n, 0) {}
+    // Move constructor
+    MyData(MyData&& other) noexcept : data(move(other.data)) {
+        cout << "Move constructor called\n";
+    }
+};
+
+int main() {
+    MyData a(1000);
+    MyData b = move(a); // Moves instead of copies
+}
+
+Key points:
+
+MyData&& in the move constructor binds to temporaries or objects explicitly cast with std::move.
+This avoids deep copies, improving performance.
+
+
+✅ Summary:
+An rvalue reference (T&&) in C++ is a reference that binds to temporaries, enabling efficient resource transfers and advanced generic programming. It’s a cornerstone of modern C++ performance optimizations.
+
+If you want, I can give you a side-by-side table comparing lvalue references and rvalue references for quick revision.
+Do you want me to prepare that?
